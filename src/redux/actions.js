@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   SET_USER,
   EDIT_USER,
