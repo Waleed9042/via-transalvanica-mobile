@@ -24,25 +24,25 @@ const LoginForm = props => {
   const net = useNetInfo();
 
   const loginHandler = async () => {
-    // if (net.isConnected) {
-    //   if (email === '' || password === '') {
-    //     alert('Login Error\nEmail/Password missing.');
-    //   } else {
-    //     setIsLoading(true);
-    //     const res = await login(email, password);
-    //     console.log(res);
-    //     if (res.data.success) {
-    //       alert('Login SuccessFull');
-    //       setIsLoading(false);
-    //       props.nav.navigate('HomePage');
-    //     } else {
-    //       setIsLoading(false);
-    //       alert('User Not Found');
-    //     }
-    //   }
-    // } else {
-    //   alert('No Internet Connection');
-    // }
+    if (net.isConnected) {
+      if (email === '' || password === '') {
+        alert('Login Error\nEmail/Password missing.');
+      } else {
+        setIsLoading(true);
+        const res = await login(email, password);
+        console.log(res);
+        if (res.data.success) {
+          alert('Login SuccessFull');
+          setIsLoading(false);
+          props.nav.navigate('HomePage');
+        } else {
+          setIsLoading(false);
+          alert('User Not Found');
+        }
+      }
+    } else {
+      alert('No Internet Connection');
+    }
   };
   return (
     <View style={styles.SignInMainSection}>
@@ -54,7 +54,7 @@ const LoginForm = props => {
             value={email}
             onChangeText={text => setEmail(text)}
             keyboardType="phone-pad"
-            maxLength={13}
+            maxLength={30}
           />
         </View>
         <View style={styles.divider} />
@@ -66,7 +66,7 @@ const LoginForm = props => {
             value={password}
             //secureTextEntry={true}
             keyboardType="phone-pad"
-            maxLength={13}
+            maxLength={15}
           />
         </View>
         <View style={styles.buttonContainer}>

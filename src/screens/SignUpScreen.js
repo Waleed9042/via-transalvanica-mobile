@@ -147,7 +147,7 @@ function SignUpScreen(props) {
                     value={email}
                     onChangeText={text => onChangeText('email', text)}
                     keyboardType="phone-pad"
-                    maxLength={13}
+                    maxLength={30}
                   />
                 </View>
                 <View style={styles.divider} />
@@ -158,7 +158,7 @@ function SignUpScreen(props) {
                     value={password}
                     onChangeText={text => onChangeText('password', text)}
                     keyboardType="phone-pad"
-                    maxLength={13}
+                    maxLength={20}
                   />
                 </View>
                 <View style={styles.divider} />
@@ -169,7 +169,7 @@ function SignUpScreen(props) {
                     value={rePassword}
                     onChangeText={text => onChangeText('rePassword', text)}
                     keyboardType="phone-pad"
-                    maxLength={13}
+                    maxLength={20}
                   />
                 </View>
                 <View style={styles.SignInContainer}>
