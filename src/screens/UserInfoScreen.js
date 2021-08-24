@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -6,14 +7,20 @@ import {
   Image,
   ImageBackground,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import normalize from 'react-native-normalize';
 //import {launchImageLibrary} from 'react-native-image-picker';
 import ButtonMedium from '../components/common/ButtonMedium';
-
+import {NETWORK_ERROR} from '../constants/Constants';
+import {addUserName} from '../services/dataServices';
+import {useNetInfo} from '@react-native-community/netinfo';
 export default function UserInfoScreen(props) {
   //const [photo, setPhoto] = useState(null);
   const [userName, setUserName] = useState('');
+  const {userId} = props.route.params;
+  const [isLoading, setIsLoading] = useState(false);
+  const net = useNetInfo();
 
   //have to see image upload issue also need to add round image like in sketch
   // const handleChoosePhoto = () => {
@@ -28,8 +35,29 @@ export default function UserInfoScreen(props) {
   //   });
   // };
 
-  const submitFormHandler = () => {
-    props.navigation.navigate('Greeting');
+  const submitFormHandler = async () => {
+    if (net.isConnected) {
+      if (userName === '') {
+        alert('Please Enter User Name');
+        return;
+      }
+
+      setIsLoading(true);
+      const res = await addUserName(userId, userName);
+
+      if (res.data.success) {
+        alert('Sign Up Completed');
+        setIsLoading(false);
+
+        props.navigation.navigate('Greeting');
+      } else {
+        alert(NETWORK_ERROR);
+        setIsLoading(false);
+      }
+    } else {
+      //toaster
+      alert('No Internet Connection');
+    }
   };
   return (
     <ImageBackground
@@ -65,7 +93,7 @@ export default function UserInfoScreen(props) {
       <View>
         <ButtonMedium
           color="#EF7D21"
-          buttonText="Finish"
+          buttonText={isLoading ? <ActivityIndicator /> : 'Finish'}
           onPressAction={submitFormHandler}
         />
       </View>

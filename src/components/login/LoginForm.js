@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -5,21 +6,42 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import normalize from 'react-native-normalize';
 import {connect} from 'react-redux';
 //file imports
 import {setJwtToken, setUserId} from '../../redux/actions';
 import ButtonMedium from '../common/ButtonMedium';
+import {useNetInfo} from '@react-native-community/netinfo';
+import {login} from '../../services/dataServices';
+import {NETWORK_ERROR} from '../../constants/Constants';
+
 const LoginForm = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const net = useNetInfo();
 
-  const loginHandler = () => {
-    if (email === '' || password === '') {
-      alert('Login Error\nEmail/Password missing.');
+  const loginHandler = async () => {
+    if (net.isConnected) {
+      if (email === '' || password === '') {
+        alert('Login Error\nEmail/Password missing.');
+      } else {
+        setIsLoading(true);
+        const res = await login(email, password);
+        console.log(res);
+        if (res.data.success) {
+          alert('Login SuccessFull');
+          setIsLoading(false);
+          props.nav.navigate('HomePage');
+        } else {
+          setIsLoading(false);
+          alert('User Not Found');
+        }
+      }
     } else {
-      props.nav && props.nav.navigate('HomePage');
+      alert('No Internet Connection');
     }
   };
   return (
@@ -32,7 +54,7 @@ const LoginForm = props => {
             value={email}
             onChangeText={text => setEmail(text)}
             keyboardType="phone-pad"
-            maxLength={13}
+            maxLength={30}
           />
         </View>
         <View style={styles.divider} />
@@ -44,14 +66,15 @@ const LoginForm = props => {
             value={password}
             //secureTextEntry={true}
             keyboardType="phone-pad"
-            maxLength={13}
+            maxLength={15}
           />
         </View>
         <View style={styles.buttonContainer}>
           <ButtonMedium
             color="#EF7D21"
-            buttonText="Log In"
+            buttonText={isLoading ? <ActivityIndicator /> : 'Log In'}
             onPressAction={loginHandler}
+            disabled={isLoading}
           />
           <View>
             <TouchableOpacity

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {
   Text,
@@ -8,12 +9,17 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  ActivityIndicator,
 } from 'react-native';
 import normalize from 'react-native-normalize';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {validate} from '../utils/utilities';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import ButtonMedium from '../components/common/ButtonMedium';
+import {register} from '../services/dataServices';
+import {NETWORK_ERROR} from '../constants/Constants';
+import {connect} from 'react-redux';
+import {setLoggedInUser} from '../redux/actions';
 
 function SignUpScreen(props) {
   const [firstName, setFirstName] = useState('');
@@ -68,13 +74,34 @@ function SignUpScreen(props) {
         alert('Passwords doesnt match');
         return;
       }
+      const userData = {
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      };
       setIsLoading(true);
-      props.navigation.navigate('UserInfoScreen');
+      const res = await register(userData);
+
+      if (res.data.success) {
+        alert('Sign Up SuccessFull');
+        setIsLoading(false);
+        props.navigation.navigate('UserInfoScreen', {
+          userId: res.data.user._id,
+        });
+      } else {
+        if (res.status === 201) {
+          alert('User Already Exist');
+          setIsLoading(false);
+        } else {
+          alert(NETWORK_ERROR);
+          setIsLoading(false);
+        }
+      }
     } else {
       //toaster
       alert('No Internet Connection');
     }
-    setIsLoading(false);
   };
 
   return (
@@ -120,7 +147,7 @@ function SignUpScreen(props) {
                     value={email}
                     onChangeText={text => onChangeText('email', text)}
                     keyboardType="phone-pad"
-                    maxLength={13}
+                    maxLength={30}
                   />
                 </View>
                 <View style={styles.divider} />
@@ -131,7 +158,7 @@ function SignUpScreen(props) {
                     value={password}
                     onChangeText={text => onChangeText('password', text)}
                     keyboardType="phone-pad"
-                    maxLength={13}
+                    maxLength={20}
                   />
                 </View>
                 <View style={styles.divider} />
@@ -142,13 +169,13 @@ function SignUpScreen(props) {
                     value={rePassword}
                     onChangeText={text => onChangeText('rePassword', text)}
                     keyboardType="phone-pad"
-                    maxLength={13}
+                    maxLength={20}
                   />
                 </View>
                 <View style={styles.SignInContainer}>
                   <ButtonMedium
                     color="#EF7D21"
-                    buttonText="Sign up"
+                    buttonText={isLoading ? <ActivityIndicator /> : 'Sign up'}
                     onPressAction={submitFormHandler}
                     disabled={isLoading}
                   />
@@ -175,6 +202,14 @@ function SignUpScreen(props) {
     </TouchableWithoutFeedback>
   );
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setLoggedInUser: user => {
+      dispatch(setLoggedInUser(user));
+    },
+  };
+};
 
 export default SignUpScreen;
 

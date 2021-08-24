@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {combineReducers} from 'redux';
 import {
   SET_USER,
@@ -75,7 +76,7 @@ const appState = (state = INITIALSTATE, action) => {
 const userState = (state = {}, action) => {
   switch (action.type) {
     case SET_USER: {
-      return {...state, userId: action.payload._id, ...action.payload};
+      return {...state, user: action.payload};
     }
     case SET_USER_ID: {
       return {...state, userId: action.payload};
