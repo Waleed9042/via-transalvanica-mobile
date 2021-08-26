@@ -19,6 +19,7 @@ import GreetingScreen from './src/screens/GreetingScreen';
 import ForgetPasswordScreen from './src/screens/ForgetPasswordScreen';
 import TutorialScreen from './src/screens/TutorialScreen';
 import SkipScreen from './src/screens/SkipScreen';
+import { HeaderMenu } from './src/components/common/HeaderMenu';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({$rem: entireScreenWidth / 380});
@@ -99,7 +100,7 @@ function AppRoot(props) {
               )}
               <Stack.Screen
                 name="HomePage"
-                component={HomeScreen}
+                component={HeaderMenu}
                 options={{
                   headerTransparent: true,
                   headerShown: false,
