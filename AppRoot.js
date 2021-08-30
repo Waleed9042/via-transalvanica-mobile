@@ -8,7 +8,6 @@ import {HeaderBackButton} from './src/components/common/HeaderBackButton';
 import {SkipButton} from './src/components/common/SkipButton';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {connect} from 'react-redux';
-import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
@@ -19,7 +18,10 @@ import GreetingScreen from './src/screens/GreetingScreen';
 import ForgetPasswordScreen from './src/screens/ForgetPasswordScreen';
 import TutorialScreen from './src/screens/TutorialScreen';
 import SkipScreen from './src/screens/SkipScreen';
-import { HeaderMenu } from './src/components/common/HeaderMenu';
+import BottomTabNavigator from './src/components/navigation/BottomTabNavigator';
+import RegionsScreen from './src/screens/RegionsScreen';
+import RegionDetail from './src/screens/RegionDetailScreen';
+import PlanTripScreen from './src/screens/PlanTripScreen';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({$rem: entireScreenWidth / 380});
@@ -90,21 +92,54 @@ function AppRoot(props) {
               ) : (
                 <Stack.Screen
                   name="HomePage"
-                  component={HomeScreen}
+                  component={BottomTabNavigator}
                   options={{
                     headerTransparent: true,
-                    headerShown: false,
-                    title: '',
+                    headerShown: true,
+                    headerTitleStyle: {color: '#ffffff'},
+                    title: 'Home',
                   }}
                 />
               )}
               <Stack.Screen
                 name="HomePage"
-                component={HeaderMenu}
+                component={BottomTabNavigator}
                 options={{
                   headerTransparent: true,
-                  headerShown: false,
-                  title: '',
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  title: 'Home',
+                }}
+              />
+              <Stack.Screen
+                name="Regions"
+                component={RegionsScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                }}
+              />
+              <Stack.Screen
+                name="RegionDetails"
+                component={RegionDetail}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="PlanTrip"
+                component={PlanTripScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
                 }}
               />
               <Stack.Screen

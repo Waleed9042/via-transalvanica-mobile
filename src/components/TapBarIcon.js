@@ -4,59 +4,59 @@ import normalize from 'react-native-normalize';
 
 export default function TabBarIcon(props) {
   return (
-    <View style={props.focused ? styles.TabIcon : styles.TabIconSelected}>
+    <View style={styles.TabIconSelected}>
       {props.name === 'home' &&
-        (props.focused ? (
+        (!props.focused ? (
           <Image
-            source={require('../assets/images/app-logo.png')}
+            source={require('../assets/images/home.png')}
             style={styles.ImageCardProduct}
             resizeMode="contain"
           />
         ) : (
           <Image
-            source={require('../assets/images/app-logo.png')}
+            source={require('../assets/images/home-focused.png')}
             style={styles.ImageCardProduct}
             resizeMode="contain"
           />
         ))}
-      {props.name === 'store' &&
-        (props.focused ? (
+      {props.name === 'regions' &&
+        (!props.focused ? (
           <Image
-            source={require('../assets/images/app-logo.png')}
+            source={require('../assets/images/regions.png')}
             style={styles.ImageCardProduct}
             resizeMode="contain"
           />
         ) : (
           <Image
-            source={require('../assets/images/app-logo.png')}
+            source={require('../assets/images/regions-focused.png')}
             style={styles.ImageCardProduct}
             resizeMode="contain"
           />
         ))}
-      {props.name === 'orders' &&
-        (props.focused ? (
+      {props.name === 'planTrip' &&
+        (!props.focused ? (
           <Image
-            source={require('../assets/images/app-logo.png')}
+            source={require('../assets/images/plan-trip.png')}
             style={styles.ImageCardProduct}
             resizeMode="contain"
           />
         ) : (
           <Image
-            source={require('../assets/images/app-logo.png')}
+            source={require('../assets/images/plan-trip-focused.png')}
             style={styles.ImageCardProduct}
             resizeMode="contain"
           />
         ))}
-      {props.name === 'queries' &&
-        (props.focused ? (
+      {props.name === 'profile' &&
+        (!props.focused ? (
           <Image
-            source={require('../assets/images/app-logo.png')}
+            source={require('../assets/images/profile.png')}
             style={styles.ImageCardProduct}
             resizeMode="contain"
           />
         ) : (
           <Image
-            source={require('../assets/images/app-logo.png')}
+            source={require('../assets/images/profile-focused.png')}
             style={styles.ImageCardProduct}
             resizeMode="contain"
           />
@@ -66,7 +66,7 @@ export default function TabBarIcon(props) {
 }
 const styles = StyleSheet.create({
   ImageCardProduct: {
-    height: normalize(22, 'width'),
+    height: normalize(35, 'width'),
   },
   TabIcon: {
     backgroundColor: '#018bff',

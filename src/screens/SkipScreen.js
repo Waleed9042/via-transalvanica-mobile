@@ -8,7 +8,7 @@ export default function SkipScreen(props) {
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/images/test.png')}
+          source={require('../assets/images/skip-logo.png')}
           style={styles.logoImage}
           resizeMode="contain"
         />
