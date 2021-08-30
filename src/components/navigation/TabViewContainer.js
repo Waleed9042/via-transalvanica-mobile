@@ -273,6 +273,7 @@ const renderScene = SceneMap({
           longitudeDelta: 1,
         }}
         stages={Bucovina}
+        name="Bucovina"
         api="AIzaSyAMiRI2PUkcZniwqKXrU6bKX1ekWO5aEE8"
       />
     );
@@ -286,6 +287,7 @@ const renderScene = SceneMap({
           latitudeDelta: 6,
           longitudeDelta: 4,
         }}
+        name="Highland"
         stages={Highland}
         api="AIzaSyAMiRI2PUkcZniwqKXrU6bKX1ekWO5aEE8"
       />
@@ -301,6 +303,7 @@ const renderScene = SceneMap({
           longitudeDelta: 1,
         }}
         stages={TerraSiculorum}
+        name="Terra Siculorum"
         api="AIzaSyAMiRI2PUkcZniwqKXrU6bKX1ekWO5aEE8"
       />
     );
@@ -315,6 +318,7 @@ const renderScene = SceneMap({
           longitudeDelta: 6,
         }}
         stages={TerraSaxonum}
+        name="Terra Saxonum"
         api="AIzaSyAMiRI2PUkcZniwqKXrU6bKX1ekWO5aEE8"
       />
     );
@@ -328,6 +332,7 @@ const renderScene = SceneMap({
           latitudeDelta: 6,
           longitudeDelta: 4,
         }}
+        name="Terra Banatica"
         stages={TerraBanatica}
         api="AIzaSyAMiRI2PUkcZniwqKXrU6bKX1ekWO5aEE8"
       />

@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import normalize from 'react-native-normalize';
 import MapViewDirections from 'react-native-maps-directions';
 
-const SingleRegionView = ({api, initialRegion, stages}) => {
+const SingleRegionView = ({api, initialRegion, stages, name}) => {
   const navigation = useNavigation();
   return (
     <View>
@@ -21,7 +21,10 @@ const SingleRegionView = ({api, initialRegion, stages}) => {
               paddingLeft: normalize(15, 'width'),
               paddingTop: normalize(15, 'width'),
             }}
-            onPress={() => navigation && navigation.navigate('RegionDetails')}
+            onPress={() =>
+              navigation &&
+              navigation.navigate('RegionDetails', {regionName: name})
+            }
             loading>
             <Text
               style={{
