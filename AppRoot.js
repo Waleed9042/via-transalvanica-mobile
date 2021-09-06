@@ -22,6 +22,13 @@ import BottomTabNavigator from './src/components/navigation/BottomTabNavigator';
 import RegionsScreen from './src/screens/RegionsScreen';
 import RegionDetail from './src/screens/RegionDetailScreen';
 import PlanTripScreen from './src/screens/PlanTripScreen';
+import RegionSelectScreen from './src/screens/RegionSelectScreen';
+import LocationScreen from './src/screens/LocationScreen';
+import SelectSegmentScreen from './src/screens/SelectSegmentScreen';
+import DirectionScreen from './src/screens/DirectionScreen';
+import DateScreen from './src/screens/DateScreen';
+import EditTripScreen from './src/screens/EditTripScreen';
+import TripCreatedScreen from './src/screens/TripCreatedScreen';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({$rem: entireScreenWidth / 380});
@@ -140,6 +147,89 @@ function AppRoot(props) {
                   headerTitleStyle: {color: '#ffffff'},
                   headerBackImage: () => <HeaderBackButton />,
                   headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="RegionSelect"
+                component={RegionSelectScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerStyle: {
+                    backgroundColor: '#EF7D21',
+                  },
+                  title: 'Create New Trip',
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="location"
+                component={LocationScreen}
+                options={{
+                  headerTransparent: false,
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="SelectSegment"
+                component={SelectSegmentScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerStyle: {
+                    backgroundColor: '#EF7D21',
+                  },
+                  title: 'Create New Trip',
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="Direction"
+                component={DirectionScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerStyle: {
+                    backgroundColor: '#EF7D21',
+                  },
+                  title: 'Create New Trip',
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="Date"
+                component={DateScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerStyle: {
+                    backgroundColor: '#EF7D21',
+                  },
+                  title: 'Create New Trip',
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="EditTrip"
+                component={EditTripScreen}
+                options={{
+                  headerTransparent: false,
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="TripCreated"
+                component={TripCreatedScreen}
+                options={{
+                  headerShown: false,
                 }}
               />
               <Stack.Screen

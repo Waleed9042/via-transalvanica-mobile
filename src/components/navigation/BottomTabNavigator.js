@@ -19,7 +19,7 @@ const getHeaderTitle = route => {
     case 'Regions':
       return 'Regions';
     case 'PlanTrip':
-      return 'Plan Trip';
+      return '';
     case 'Profile':
       return 'Profile';
   }

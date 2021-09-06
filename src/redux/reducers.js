@@ -7,15 +7,50 @@ import {
   EDIT_USER,
   ADD_USER_SUCCESS,
   SIGN_OUT,
+  SET_REGION,
+  SET_STAGE,
+  SET_DIR,
+  SET_S_DATE,
+  SET_E_DATE,
+  SET_TRIP_NAME,
+  SET_TRIP_DESC,
 } from './action-types';
 
 const INITIALSTATE = {
   regions: [],
+  selectedRegion: '',
+  selectedStage: {},
+  selectedDirection: '',
+  startDate: '',
+  endData: '',
+  tripName: '',
+  tripDescription: '',
   user: {},
   trips: [],
 };
 const appState = (state = INITIALSTATE, action) => {
   switch (action.type) {
+    case SET_REGION : {
+      return {...state, selectedRegion: action.payload};
+    }
+    case SET_TRIP_NAME : {
+      return {...state, tripName: action.payload};
+    }
+    case SET_TRIP_DESC : {
+      return {...state, tripDescription: action.payload};
+    }
+    case SET_STAGE : {
+      return {...state, selectedStage: action.payload};
+    }
+    case SET_DIR : {
+      return {...state, selectedDirection: action.payload};
+    }
+    case SET_S_DATE : {
+      return {...state, startDate: action.payload};
+    }
+    case SET_E_DATE : {
+      return {...state, endData: action.payload};
+    }
     // case SET_BRANDS: {
     //   return {...state, brands: action.payload};
     // }
