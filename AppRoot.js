@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import useLinking from './src/navigation/useLinking';
-import {HeaderBackButton} from './src/components/common/HeaderBackButton';
+import HeaderBackButton from './src/components/common/HeaderBackButton';
 import {SkipButton} from './src/components/common/SkipButton';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {connect} from 'react-redux';
@@ -86,28 +86,16 @@ function AppRoot(props) {
                   backgroundColor: '#1a1919',
                 },
               }}>
-              {!user.id ? (
-                <Stack.Screen
-                  name="GetStarted"
-                  component={GetStartedScreen}
-                  headerTransparent="true"
-                  options={{
-                    headerShown: false,
-                    headerTransparent: true,
-                  }}
-                />
-              ) : (
-                <Stack.Screen
-                  name="HomePage"
-                  component={BottomTabNavigator}
-                  options={{
-                    headerTransparent: true,
-                    headerShown: true,
-                    headerTitleStyle: {color: '#ffffff'},
-                    title: 'Home',
-                  }}
-                />
-              )}
+              <Stack.Screen
+                name="GetStarted"
+                component={GetStartedScreen}
+                headerTransparent="true"
+                options={{
+                  headerShown: false,
+                  headerTransparent: true,
+                }}
+              />
+
               <Stack.Screen
                 name="HomePage"
                 component={BottomTabNavigator}
@@ -116,8 +104,11 @@ function AppRoot(props) {
                   headerShown: true,
                   headerTitleStyle: {color: '#ffffff'},
                   title: 'Home',
+                  headerBackTitle: () => '',
+                  headerBackImage: () => null,
                 }}
               />
+
               <Stack.Screen
                 name="Regions"
                 component={RegionsScreen}

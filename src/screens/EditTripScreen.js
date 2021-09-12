@@ -15,6 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {setDescription, setName} from '../redux/actions';
 import ButtonMedium from '../components/common/ButtonMedium';
 import SelectedRegionView from '../components/navigation/SelectedRegionView';
+import {createTrip} from '../services/dataServices';
 
 const getInitialRegion = name => {
   switch (name) {
@@ -752,7 +753,14 @@ const getStages = region => {
 };
 
 const EditTripScreen = props => {
-  const {startDate, selectedStage, selectedRegion} = props;
+  const {
+    startDate,
+    selectedStage,
+    selectedRegion,
+    userId,
+    endDate,
+    selectedDirection,
+  } = props;
   const {startPoint, endPoint} = selectedStage;
   const navigation = useNavigation();
   const [showMap, setShowMap] = React.useState(false);
@@ -765,13 +773,31 @@ const EditTripScreen = props => {
     setShowMap(!showMap);
   };
 
-  const handlePress = () => {
+  const handlePress = async () => {
     if (tripName === '' || description === '') {
       return;
     }
     props.setTripDescription(description);
     props.setTripName(tripName);
-    navigation.replace('TripCreated');
+    const reqObj = {
+      userId: userId,
+      region: {
+        stage: selectedStage,
+        name: tripName,
+        description: description,
+      },
+      startPoint: startPoint && startPoint.name,
+      endPoint: endPoint && endPoint.name,
+      startDate: startDate || Date.now(),
+      endDate: endDate || Date.now(),
+      direction: selectedDirection === 'S' ? 'South' : 'North',
+    };
+    const tripResp = await createTrip(reqObj);
+    if (tripResp && !tripResp.data.success) {
+      navigation.replace('TripCreated', {error: true});
+    } else {
+      navigation.replace('TripCreated', {error: false});
+    }
   };
   return (
     <View style={styles.MainViewContainer}>
@@ -949,6 +975,11 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     startDate: get(state, 'appState.startDate', ''),
+    userId: get(state, 'userState.userId', ''),
+    endDate: get(state, 'appState.endDate', ''),
+    tripNamee: get(state, 'appState.tripName', ''),
+    tripDescription: get(state, 'appState.tripDescription', ''),
+    selectedDirection: get(state, 'appState.selectedDirection', ''),
     selectedStage: get(state, 'appState.selectedStage', ''),
     selectedRegion: get(state, 'appState.selectedRegion', ''),
   };

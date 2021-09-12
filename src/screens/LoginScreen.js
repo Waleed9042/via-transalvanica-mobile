@@ -14,7 +14,7 @@ import {useNetInfo} from '@react-native-community/netinfo';
 import LoginForm from '../components/login/LoginForm';
 import ButtonMedium from '../components/common/ButtonMedium';
 
-export default function LoginScreen(props) {
+ const LoginScreen = (props) => {
   const isConnected = useNetInfo();
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -40,6 +40,7 @@ export default function LoginScreen(props) {
   );
 }
 
+export default LoginScreen;
 const styles = StyleSheet.create({
   image: {
     flex: 1,

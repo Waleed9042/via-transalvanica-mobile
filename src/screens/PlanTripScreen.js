@@ -1,11 +1,25 @@
 import React from 'react';
 import {isEmpty} from 'lodash';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import {View, StyleSheet, Text, Image, ScrollView} from 'react-native';
 import normalize from 'react-native-normalize';
 import ButtonMedium from '../components/common/ButtonMedium';
+import TripCard from '../components/common/TripCard';
+import {fetchAllTrips} from '../services/dataServices';
 
 const PlanTripScreen = props => {
-  const {trips} = props;
+  const [trips, setTrips] = React.useState([]);
+  React.useEffect(() => {
+    async function fetch() {
+      const res = await fetchAllTrips();
+      if (!res.data.success) {
+        setTrips([]);
+      } else {
+        setTrips(res.data.trips);
+      }
+    }
+    fetch();
+  }, []);
+
   return (
     <View style={styles.MainViewContainer}>
       <View style={styles.planTripTextContainer}>
@@ -30,6 +44,12 @@ const PlanTripScreen = props => {
           <View style={styles.tripsContainer}>
             <View>
               <Text style={styles.upcomingTripText}>Upcoming Trips</Text>
+              <ScrollView>
+                {trips &&
+                  trips.map((trip, idx) => {
+                    return <TripCard key={idx} trip={!isEmpty(trip) && trip} />;
+                  })}
+              </ScrollView>
             </View>
           </View>
         ) : (

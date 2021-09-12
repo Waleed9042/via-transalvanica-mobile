@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {get} from "lodash";
 import normalize from 'react-native-normalize';
 import {connect} from 'react-redux';
 //file imports
@@ -15,7 +16,6 @@ import {setJwtToken, setUserId} from '../../redux/actions';
 import ButtonMedium from '../common/ButtonMedium';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {login} from '../../services/dataServices';
-import {NETWORK_ERROR} from '../../constants/Constants';
 
 const LoginForm = props => {
   const [email, setEmail] = useState('');
@@ -30,11 +30,13 @@ const LoginForm = props => {
       } else {
         setIsLoading(true);
         const res = await login(email, password);
-        console.log(res);
         if (res.data.success) {
+          const userId = get(res, 'data.user._id', '');
+          console.log('🚀 ~ file: LoginForm.js ~ line 36 ~ loginHandler ~ userId', userId)
+          props.setUserId(userId);
           alert('Login SuccessFull');
           setIsLoading(false);
-          props.nav.navigate('HomePage');
+          props.nav.replace('HomePage');
         } else {
           setIsLoading(false);
           alert('User Not Found');
@@ -53,7 +55,6 @@ const LoginForm = props => {
             style={styles.InputStyle}
             value={email}
             onChangeText={text => setEmail(text)}
-            keyboardType="phone-pad"
             maxLength={30}
           />
         </View>
@@ -63,9 +64,8 @@ const LoginForm = props => {
           <TextInput
             style={styles.InputStyle}
             onChangeText={pw => setPassword(pw)}
-            value={password}
-            //secureTextEntry={true}
-            keyboardType="phone-pad"
+            defaultValue={password}
+            secureTextEntry={true}
             maxLength={15}
           />
         </View>
@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 12,
     color: '#ffffff',
-    fontSize: normalize(14, 'width'),
+    fontWeight: 'bold',
+    fontSize: normalize(18, 'width'),
   },
   emailText: {
     color: '#ffffff',

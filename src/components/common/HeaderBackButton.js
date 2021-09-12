@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Image} from 'react-native';
 import normalize from 'react-native-normalize';
 
-export function HeaderBackButton(props) {
+const HeaderBackButton = props => {
   return (
     <Image
       source={require('../../assets/images/button-back.png')}
@@ -10,7 +10,9 @@ export function HeaderBackButton(props) {
       resizeMode="contain"
     />
   );
-}
+};
+
+export default HeaderBackButton;
 const styles = StyleSheet.create({
   BackIcon: {
     width: normalize(22, 'width'),

@@ -10,30 +10,51 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import normalize from 'react-native-normalize';
-//import {launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {isEmpty, get} from "lodash";
 import ButtonMedium from '../components/common/ButtonMedium';
 import {NETWORK_ERROR} from '../constants/Constants';
 import {addUserName} from '../services/dataServices';
 import {useNetInfo} from '@react-native-community/netinfo';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+
 export default function UserInfoScreen(props) {
-  //const [photo, setPhoto] = useState(null);
   const [userName, setUserName] = useState('');
   const {userId} = props.route.params;
   const [isLoading, setIsLoading] = useState(false);
   const net = useNetInfo();
+  const [filePath, setFilePath] = useState({});
 
-  //have to see image upload issue also need to add round image like in sketch
-  // const handleChoosePhoto = () => {
-  //   const options = {
-  //     noData: true,
-  //   };
-  //   launchImageLibrary(options, response => {
-  //     console.log('--->', photo);
-  //     if (response.uri) {
-  //       setPhoto(response);
-  //     }
-  //   });
-  // };
+  const chooseFile = () => {
+    let options = {
+      title: 'Select Image',
+      customButtons: [
+        {
+          name: 'customOptionKey',
+          title: 'Choose Photo from Custom Option',
+        },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary &&
+      launchImageLibrary(options, response => {
+        console.log('Response = ', get(response,'assets[0].uri',""));
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+          alert(response.customButton);
+        } else {
+          setFilePath(get(response, 'assets[0].uri', ''));
+        }
+      });
+  };
 
   const submitFormHandler = async () => {
     if (net.isConnected) {
@@ -59,6 +80,7 @@ export default function UserInfoScreen(props) {
       alert('No Internet Connection');
     }
   };
+
   return (
     <ImageBackground
       source={require('../assets/images/user-info-bg.png')}
@@ -68,16 +90,33 @@ export default function UserInfoScreen(props) {
           {'Please choose a photo and username to attach with your account.'}
         </Text>
       </View>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        {/* {photo && (
-          <Image source={{uri: photo.uri}} style={{width: 300, height: 300}} />
-        )} */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('../assets/images/test.png')}
-            style={styles.logoImage}
-          />
-        </View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        {!isEmpty(filePath) ? (
+          <>
+            <View style={styles.logoContainer}>
+              <TouchableOpacity onPress={chooseFile}>
+                <Image
+                  source={{uri: filePath}}
+                  style={styles.logoImage}
+                />
+              </TouchableOpacity>
+            </View>
+          </>
+        ) : (
+          <View style={styles.logoContainer}>
+            <TouchableOpacity onPress={chooseFile}>
+              <Image
+                source={require('../assets/images/image-upload.png')}
+                style={styles.logoImage}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <View style={styles.InputContainer}>
         <Text style={styles.emailText}>Username*</Text>
@@ -137,8 +176,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoImage: {
-    width: normalize(150, 'width'),
-    height: normalize(80, 'height'),
+    width: normalize(120, 'width'),
+    height: normalize(120, 'width'),
+    borderRadius: 50,
+    borderColor: "#fff",
+    borderWidth: 1,
   },
   InputContainer: {
     flexDirection: 'column',

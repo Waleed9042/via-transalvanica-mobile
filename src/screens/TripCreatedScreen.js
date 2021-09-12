@@ -4,6 +4,7 @@ import normalize from 'react-native-normalize';
 import ButtonMedium from '../components/common/ButtonMedium';
 
 export default function TripCreatedScreen(props) {
+  const {error = false} = props && props.route && props.route.params;
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -14,21 +15,31 @@ export default function TripCreatedScreen(props) {
         />
       </View>
       <View style={styles.skipContainer}>
-        <Text style={styles.mainText}>Trip Created</Text>
-        <Text style={styles.subText}>Your trip was created successfully!</Text>
+        <Text style={styles.mainText}>
+          {error ? 'Trip Couldnt Be Created' : 'Trip Created'}
+        </Text>
         <Text style={styles.subText}>
-          If you want you can add this trip to your calender and get reminders.
+          {error
+            ? 'There is some issue with the network, please try again later !!!'
+            : 'Your trip was created successfully!'}
+        </Text>
+        <Text style={styles.subText}>
+          {error
+            ? 'Sorry for the Inconvenience'
+            : 'If you want you can add this trip to your calender and get reminders.'}
         </Text>
       </View>
       <View style={styles.GetStartedContainer}>
+        {error ? null : (
+          <ButtonMedium
+            color="#ffffff"
+            textColor="#EF7D21"
+            buttonText="Add to Calender"
+            //onPressAction={() => props.navigation.replace('SignUp')}
+          />
+        )}
         <ButtonMedium
-          color="#ffffff"
-          textColor="#EF7D21"
-          buttonText="Add to Calender"
-          //onPressAction={() => props.navigation.replace('SignUp')}
-        />
-        <ButtonMedium
-          buttonText="no, Thanks !"
+          buttonText={error ? 'OK' : 'no, Thanks !'}
           onPressAction={() => props.navigation.replace('PlanTrip')}
         />
       </View>
