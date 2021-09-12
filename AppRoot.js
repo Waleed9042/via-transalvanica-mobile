@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import useLinking from './src/navigation/useLinking';
-import {HeaderBackButton} from './src/components/common/HeaderBackButton';
+import HeaderBackButton from './src/components/common/HeaderBackButton';
 import {SkipButton} from './src/components/common/SkipButton';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {connect} from 'react-redux';
@@ -22,6 +22,13 @@ import BottomTabNavigator from './src/components/navigation/BottomTabNavigator';
 import RegionsScreen from './src/screens/RegionsScreen';
 import RegionDetail from './src/screens/RegionDetailScreen';
 import PlanTripScreen from './src/screens/PlanTripScreen';
+import RegionSelectScreen from './src/screens/RegionSelectScreen';
+import LocationScreen from './src/screens/LocationScreen';
+import SelectSegmentScreen from './src/screens/SelectSegmentScreen';
+import DirectionScreen from './src/screens/DirectionScreen';
+import DateScreen from './src/screens/DateScreen';
+import EditTripScreen from './src/screens/EditTripScreen';
+import TripCreatedScreen from './src/screens/TripCreatedScreen';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({$rem: entireScreenWidth / 380});
@@ -79,28 +86,16 @@ function AppRoot(props) {
                   backgroundColor: '#1a1919',
                 },
               }}>
-              {!user.id ? (
-                <Stack.Screen
-                  name="GetStarted"
-                  component={GetStartedScreen}
-                  headerTransparent="true"
-                  options={{
-                    headerShown: false,
-                    headerTransparent: true,
-                  }}
-                />
-              ) : (
-                <Stack.Screen
-                  name="HomePage"
-                  component={BottomTabNavigator}
-                  options={{
-                    headerTransparent: true,
-                    headerShown: true,
-                    headerTitleStyle: {color: '#ffffff'},
-                    title: 'Home',
-                  }}
-                />
-              )}
+              <Stack.Screen
+                name="GetStarted"
+                component={GetStartedScreen}
+                headerTransparent="true"
+                options={{
+                  headerShown: false,
+                  headerTransparent: true,
+                }}
+              />
+
               <Stack.Screen
                 name="HomePage"
                 component={BottomTabNavigator}
@@ -109,8 +104,11 @@ function AppRoot(props) {
                   headerShown: true,
                   headerTitleStyle: {color: '#ffffff'},
                   title: 'Home',
+                  headerBackTitle: () => '',
+                  headerBackImage: () => null,
                 }}
               />
+
               <Stack.Screen
                 name="Regions"
                 component={RegionsScreen}
@@ -140,6 +138,89 @@ function AppRoot(props) {
                   headerTitleStyle: {color: '#ffffff'},
                   headerBackImage: () => <HeaderBackButton />,
                   headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="RegionSelect"
+                component={RegionSelectScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerStyle: {
+                    backgroundColor: '#EF7D21',
+                  },
+                  title: 'Create New Trip',
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="location"
+                component={LocationScreen}
+                options={{
+                  headerTransparent: false,
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="SelectSegment"
+                component={SelectSegmentScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerStyle: {
+                    backgroundColor: '#EF7D21',
+                  },
+                  title: 'Create New Trip',
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="Direction"
+                component={DirectionScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerStyle: {
+                    backgroundColor: '#EF7D21',
+                  },
+                  title: 'Create New Trip',
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="Date"
+                component={DateScreen}
+                options={{
+                  headerTransparent: true,
+                  headerShown: true,
+                  headerTitleStyle: {color: '#ffffff'},
+                  headerStyle: {
+                    backgroundColor: '#EF7D21',
+                  },
+                  title: 'Create New Trip',
+                  headerBackImage: () => <HeaderBackButton />,
+                  headerBackTitle: () => '',
+                }}
+              />
+              <Stack.Screen
+                name="EditTrip"
+                component={EditTripScreen}
+                options={{
+                  headerTransparent: false,
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="TripCreated"
+                component={TripCreatedScreen}
+                options={{
+                  headerShown: false,
                 }}
               />
               <Stack.Screen

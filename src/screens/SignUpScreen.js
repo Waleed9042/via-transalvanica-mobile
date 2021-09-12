@@ -21,7 +21,7 @@ import {NETWORK_ERROR} from '../constants/Constants';
 import {connect} from 'react-redux';
 import {setLoggedInUser} from '../redux/actions';
 
-function SignUpScreen(props) {
+const SignUpScreen = (props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -157,7 +157,7 @@ function SignUpScreen(props) {
                     style={styles.InputStyle}
                     value={password}
                     onChangeText={text => onChangeText('password', text)}
-                    keyboardType="phone-pad"
+                    secureTextEntry={true}
                     maxLength={20}
                   />
                 </View>
@@ -168,7 +168,7 @@ function SignUpScreen(props) {
                     style={styles.InputStyle}
                     value={rePassword}
                     onChangeText={text => onChangeText('rePassword', text)}
-                    keyboardType="phone-pad"
+                    secureTextEntry={true}
                     maxLength={20}
                   />
                 </View>
@@ -211,7 +211,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default SignUpScreen;
+export default connect(null, mapDispatchToProps)(SignUpScreen);
 
 const styles = EStyleSheet.create({
   image: {
@@ -222,7 +222,7 @@ const styles = EStyleSheet.create({
   },
   container: {
     flex: 10,
-    paddingTop: normalize(70, 'height'),
+    paddingTop: normalize(50, 'height'),
   },
   scroll: {
     flex: 3,
